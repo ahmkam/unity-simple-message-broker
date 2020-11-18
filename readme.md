@@ -30,6 +30,9 @@ public class FooArgs
     public string value;
 }
 
+// Your function
+public void FooWithMessage(FooArgs arg) => Debug.Log(arg.value);
+
 // Subscribe message, with or without id
 SimpleMessageBroker.Subscribe<FooArgs>("foo_id", FooWithMessage);
 
@@ -42,6 +45,6 @@ SimpleMessageBroker.Unsubscribe<FooArgs>("foo_id", FooWithMessage);
 
 -------------
 ### Todo
-~~- Filtering messages belonging to the same message class~~
+- ~~Filtering messages belonging to the same message class~~
 - Utility methods
 - Error checking
