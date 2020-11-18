@@ -6,60 +6,42 @@ A simple message broker for C# and Unity inspired by UniRx message broker
 Copy the Plugins/SimpleMessageBroker folder into your project or download the [unity package](https://github.com/ahmkam/unity-simple-message-broker/releases/download/1.0/UnitySimpleMessageBroker-v1.0.unitypackage) from release
 
 
-Define a message class
+Sending / receiving empty message
 ```csharp
-public class PersonData
-{
-    public string name;
-    public int age;
+// Your function
+public void Foo() => Debug.Log("Foo");
 
-    public override string ToString() => $"Name:{name}, Age:{age}";
-}
+// Subscribe message
+SimpleMessageBroker.Subscribe("foo_id", Foo);
+
+// Publish message
+SimpleMessageBroker.Publish("foo_id");
+
+// Unsubscribe message
+SimpleMessageBroker.Unsubscribe("foo_id", Foo);
 ```
 
-Subscribe to listen the message
-``` csharp
-using UnityEngine;
-using UnityEngine.UI;
-using AhmKam;
+Sending / receiving with a message class. An ID can be given if you want to filter messages of the same class
 
-public class DemoText : MonoBehaviour
+```csharp
+// Message class
+public class FooArgs
 {
-    public Text uiText;
-
-    void Start() => SimpleMessageBroker.Subscribe<PersonData>(UpdateText);
-
-    private void UpdateText(PersonData person) => uiText.text = person.ToString();
-
-    private void OnDestroy() => SimpleMessageBroker.Unsubscribe<PersonData>(UpdateText);
+    public string value;
 }
 
+// Subscribe message, with or without id
+SimpleMessageBroker.Subscribe<FooArgs>("foo_id", FooWithMessage);
+
+// Publish
+SimpleMessageBroker.Publish<FooArgs>("foo_id", new FooArgs() { value = "hello world" });
+
+// Unsubscribe
+SimpleMessageBroker.Unsubscribe<FooArgs>("foo_id", FooWithMessage);
 ```
-
-Publish the message
-``` csharp
-using UnityEngine;
-using AhmKam;
-
-public class DemoButton : MonoBehaviour
-{
-    public void OnButtonClicked()
-    {
-        SimpleMessageBroker.Publish<PersonData>(new PersonData()
-        {
-            name = $"User {UnityEngine.Random.Range(1, 1000)}",
-            age = UnityEngine.Random.Range(1, 100)
-        });
-    }
-}
-```
--------------
-### Note!!
-
-Make sure to unsubscribe the message!
 
 -------------
 ### Todo
-- Filtering messages belonging to the same message class
+~~- Filtering messages belonging to the same message class~~
 - Utility methods
 - Error checking

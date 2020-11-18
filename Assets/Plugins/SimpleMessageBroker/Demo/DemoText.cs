@@ -6,9 +6,24 @@ public class DemoText : MonoBehaviour
 {
     public Text uiText;
 
-    void Start() => SimpleMessageBroker.Subscribe<PersonData>(UpdateText);
+    void Start()
+    {
+        // Subscribe
+        SimpleMessageBroker.Subscribe<FooArgs>("foo_id", FooWithMessage);
+    }
 
-    private void UpdateText(PersonData person) => uiText.text = person.ToString();
+    // Function
+    public void FooWithMessage(FooArgs arg) => Debug.Log(arg.value);
 
-    private void OnDestroy() => SimpleMessageBroker.Unsubscribe<PersonData>(UpdateText);
+    private void OnDestroy()
+    {
+        // Unsubscribe
+        SimpleMessageBroker.Unsubscribe<FooArgs>("foo_id", FooWithMessage);
+    }
+
+}
+
+public class FooArgs
+{
+    public string value;
 }
