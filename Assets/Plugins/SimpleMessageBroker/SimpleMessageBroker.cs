@@ -26,13 +26,11 @@ namespace AhmKam
             int callbackHashCode = callback.GetHashCode();
             if (!messageBrokerMap[typeKey][id].ContainsKey(callbackHashCode))
             {
-                UnityEngine.Debug.Log(callback.Target);
                 var subData = new SubscriberInfo()
                 {
                     target = callback.Target,
                     methodCallback = callback.Method
                 };
-                UnityEngine.Debug.Log($"{id} add callback");
                 messageBrokerMap[typeKey][id].Add(callbackHashCode, subData);
             }
         }
@@ -113,7 +111,6 @@ namespace AhmKam
                     int callbackHashCode = callback.GetHashCode();
                     if (messageBrokerMap[typeKey][id].ContainsKey(callbackHashCode))
                     {
-                        UnityEngine.Debug.Log($"Unsubing {id}");
                         messageBrokerMap[typeKey][id].Remove(callbackHashCode);
                     }
                 }
