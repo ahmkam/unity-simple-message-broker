@@ -5,7 +5,7 @@ A simple message broker for C# and Unity inspired by UniRx message broker
 ### Usage
 Copy the Plugins/SimpleMessageBroker folder into your project or download the [unity package](https://github.com/ahmkam/unity-simple-message-broker/releases/download/1.0/UnitySimpleMessageBroker-v1.0.unitypackage) from release
 
-
+<br />
 
 Sending / receiving empty message
 ```csharp
