@@ -34,7 +34,7 @@ public class FooArgs
 // Your function
 public void FooWithMessage(FooArgs arg) => Debug.Log(arg.value);
 
-// Subscribe message, with or without id
+// Subscribe message
 SimpleMessageBroker.Subscribe<FooArgs>("foo_id", FooWithMessage);
 
 // Publish
